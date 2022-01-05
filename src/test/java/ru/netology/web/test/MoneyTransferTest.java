@@ -12,55 +12,34 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MoneyTransferTest {
 
-//    @Test
-//    void shouldTransferMoneyBetweenOwnCardsV1() {
-//        open("http://localhost:9999");
-//        var loginPage = new LoginPageV1();
-////    var loginPage = open("http://localhost:9999", LoginPageV1.class);
-//        var authInfo = DataHelper.getAuthInfo();
-//        var verificationPage = loginPage.validLogin(authInfo);
-//        var verificationCode = DataHelper.getVerificationCodeFor(authInfo);
-//        verificationPage.validVerify(verificationCode);
-//    }
+
+    int amountToTransfer = 500;
 
     @Test
-    void shouldTransferMoneyBetweenOwnCardsV2() {
+    void shouldTransferMoneyFromFirstToSecondCard() {
         open("http://localhost:9999");
         var loginPage = new LoginPageV2();
-//    var loginPage = open("http://localhost:9999", LoginPageV2.class);
+
         var authInfo = DataHelper.getAuthInfo();
         var verificationPage = loginPage.validLogin(authInfo);
         var verificationCode = DataHelper.getVerificationCodeFor(authInfo);
-        verificationPage.validVerify(verificationCode);
-        var balanceFirst = DashboardPage.getCardBalance(0);
-        var balanceSecond = DashboardPage.getCardBalance(1);
-        var rechargeableCard = DashboardPage.topUpBalance(1);
-        var amountForTransfer = (CardReplenishmentPage.transferMany("500"));
-        //var valueAmountForTransfer = Integer.parseInt(String.valueOf(amountForTransfer));
-
-        var actualBalanceFirst = DashboardPage.getCardBalance(0);
-        var actualBalanceSecond = DashboardPage.getCardBalance(1);
-
-        int expectedBalanceSecond = 9500;
-
-        int expectedBalanceFirst = 10500;
+        var dashboardPage = verificationPage.validVerify(verificationCode);
+        int balanceFirstCardBefore = DashboardPage.getCurrentBalanceFirstCard();
+        int balanceSecondCardBefore = DashboardPage.getCurrentBalanceSecondCard();
 
 
+        var cardReplenishmentPage = dashboardPage.chooseSecondCardToRecharge();
+        var cardInfo = DataHelper.getFirstCardInfo();
+        cardReplenishmentPage.transferMany(cardInfo);
+        int balanceAfterTransactionOnRecharged = DataHelper.checkBalanceOfRechargeableCard(balanceFirstCardBefore, amountToTransfer);
+        int balanceAfterTransaction = DataHelper.checkBalanceWhereTransfer(balanceSecondCardBefore, amountToTransfer);
+        int balanceFirstCardAfter = DashboardPage.getCurrentBalanceFirstCard();
+        int balanceSecondCardAfter = DashboardPage.getCurrentBalanceSecondCard();
+        assertEquals(balanceAfterTransactionOnRecharged, balanceSecondCardAfter);
+        assertEquals(balanceAfterTransaction, balanceFirstCardAfter);
 
-
-
-        assertEquals(expectedBalanceFirst, actualBalanceFirst);
 
     }
 
-   // @Test
 
-//    @Test
-//    void shouldTransferMoneyBetweenOwnCardsV3() {
-//        var loginPage = open("http://localhost:9999", LoginPageV3.class);
-//        var authInfo = DataHelper.getAuthInfo();
-//        var verificationPage = loginPage.validLogin(authInfo);
-//        var verificationCode = DataHelper.getVerificationCodeFor(authInfo);
-//        verificationPage.validVerify(verificationCode);
-//    }
 }

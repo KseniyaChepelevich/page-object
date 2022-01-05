@@ -10,46 +10,33 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
 public class DashboardPage {
-    private static ElementsCollection cards = $$(".list__item");
-    private static final String balanceStart = "баланс: ";
-    private static final String balanceFinish = " р.";
+    private SelenideElement firstCardButton = $$("[data-test-id=action-deposit]").first();
+    private SelenideElement secondCardButton = $$("[data-test-id=action-deposit]").last();
+    private static SelenideElement balance0001 = $("[data-test-id='92df3f1c-a033-48e6-8390-206f6b1f56c0']");
+    private static SelenideElement balance0002 = $("[data-test-id='0f3f5c2a-249e-4c3d-8287-09f7a039391d']");
 
-    private static ElementsCollection buttons = $$("button");
-
-    private SelenideElement heading = $("[data-test-id=dashboard]");
-
-
-    public DashboardPage() {
-        heading.shouldBe(visible);
-    }
-
-    public static int getCardBalance(int index) {
-        int i = index;
-        val text = cards.get(i).text();
-        return extractBalance(text);
-    }
-
-//    public static int getCardsBalanse() {
-//        int balanceFirstCard = getCardBalance(1);
-//        int balanceSecondCard = getCardBalance(2);
-//        return balanceFirstCard, balanceSecondCard;
-//    }
-
-    private static int extractBalance(String text) {
-        val start = text.indexOf(balanceStart);
-        val finish = text.indexOf(balanceFinish);
-        val value = text.substring(start + balanceStart.length(), finish);
-        return  Integer.parseInt(value);
-    }
-
-    public static CardReplenishmentPage topUpBalance(int index) {
-        int i = index;
-        buttons.get(i).click();
+    public CardReplenishmentPage chooseFirstCardToRecharge() {
+        firstCardButton.click();
         return new CardReplenishmentPage();
+    }
 
+    public CardReplenishmentPage chooseSecondCardToRecharge() {
+        secondCardButton.click();
+        return new CardReplenishmentPage();
     }
 
 
+    public static int getCurrentBalanceFirstCard() {
+        String selectedValue = balance0001.getText();
+        String balanceOfFirstCard = selectedValue.substring(29, selectedValue.indexOf(" ", 29));
+        return Integer.parseInt(balanceOfFirstCard);
+    }
+
+    public static int getCurrentBalanceSecondCard() {
+        String selectedValue = balance0002.getText();
+        String balanceOfSecondCard = selectedValue.substring(29, selectedValue.indexOf(" ", 29));
+        return Integer.parseInt(balanceOfSecondCard);
+    }
 
 
 }

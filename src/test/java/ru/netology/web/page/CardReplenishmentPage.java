@@ -12,23 +12,20 @@ public class CardReplenishmentPage {
 
     private static SelenideElement amountField = $("[data-test-id='amount'] input");
     private static SelenideElement fromField = $("[data-test-id='from'] input");
-    private static SelenideElement toField = $("[data-test-id='to'] input");
+
     private static SelenideElement transferButton = $("[data-test-id='action-transfer']");
-    private SelenideElement cancelButton = $("[data-test-id='action-cancel']");
 
 
     public CardReplenishmentPage() {
         form.shouldBe(visible);
     }
 
-    public static DashboardPage transferMany(String amount) {
+    public void transferMany(DataHelper.CardInfo fromCardInfo) {
+        String amountToTransferForTest = "500";
+        amountField.setValue(amountToTransferForTest);
+        fromField.setValue(fromCardInfo.getCardNumber());
 
-
-        amountField.setValue(amount);
-        fromField.setValue(DataHelper.getAuthInfo().getSecondCardNumber());
-//        toField.setValue(DataHelper.getAuthInfo().getFirstCardNumber());
         transferButton.click();
-        return new DashboardPage();
-
     }
+
 }

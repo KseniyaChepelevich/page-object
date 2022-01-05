@@ -14,6 +14,7 @@ public class MoneyTransferTest {
 
 
     int amountToTransfer = 500;
+    int newAmountToTransfer = 10500;
 
     @Test
     void shouldTransferMoneyFromFirstToSecondCard() {
@@ -27,7 +28,7 @@ public class MoneyTransferTest {
         int balanceSecondCardBefore = DashboardPage.getCurrentBalanceSecondCard();
         var cardReplenishmentPage = dashboardPage.chooseSecondCardToRecharge();
         var cardInfo = DataHelper.getFirstCardInfo();
-        cardReplenishmentPage.transferMany(cardInfo);
+        cardReplenishmentPage.transferMany500(cardInfo);
         int balanceAfterTransactionOnRecharged = DataHelper.checkBalanceOfRechargeableCard(balanceSecondCardBefore, amountToTransfer);
         int balanceAfterTransaction = DataHelper.checkBalanceWhereTransfer(balanceFirstCardBefore, amountToTransfer);
         int balanceFirstCardAfter = DashboardPage.getCurrentBalanceFirstCard();
@@ -48,9 +49,30 @@ public class MoneyTransferTest {
         int balanceSecondCardBefore = DashboardPage.getCurrentBalanceSecondCard();
         var cardReplenishmentPage = dashboardPage.chooseFirstCardToRecharge();
         var cardInfo = DataHelper.getSecondCardInfo();
-        cardReplenishmentPage.transferMany(cardInfo);
+        cardReplenishmentPage.transferMany500(cardInfo);
         int balanceAfterTransactionOnRecharged = DataHelper.checkBalanceOfRechargeableCard(balanceFirstCardBefore, amountToTransfer);
         int balanceAfterTransaction = DataHelper.checkBalanceWhereTransfer(balanceSecondCardBefore, amountToTransfer);
+        int balanceFirstCardAfter = DashboardPage.getCurrentBalanceSecondCard();
+        int balanceSecondCardAfter = DashboardPage.getCurrentBalanceFirstCard();
+        assertEquals(balanceAfterTransactionOnRecharged, balanceSecondCardAfter);
+        assertEquals(balanceAfterTransaction, balanceFirstCardAfter);
+    }
+
+    @Test
+    void shouldTransferMoneyFromSecondToFirstCardIfTransferIsGreaterThanBalance() {
+        open("http://localhost:9999");
+        var loginPage = new LoginPageV2();
+        var authInfo = DataHelper.getAuthInfo();
+        var verificationPage = loginPage.validLogin(authInfo);
+        var verificationCode = DataHelper.getVerificationCodeFor(authInfo);
+        var dashboardPage = verificationPage.validVerify(verificationCode);
+        int balanceFirstCardBefore = DashboardPage.getCurrentBalanceFirstCard();
+        int balanceSecondCardBefore = DashboardPage.getCurrentBalanceSecondCard();
+        var cardReplenishmentPage = dashboardPage.chooseFirstCardToRecharge();
+        var cardInfo = DataHelper.getSecondCardInfo();
+        cardReplenishmentPage.transferMany10500(cardInfo);
+        int balanceAfterTransactionOnRecharged = DataHelper.checkBalanceOfRechargeableCard(balanceFirstCardBefore, newAmountToTransfer);
+        int balanceAfterTransaction = DataHelper.checkBalanceWhereTransfer(balanceSecondCardBefore, newAmountToTransfer);
         int balanceFirstCardAfter = DashboardPage.getCurrentBalanceSecondCard();
         int balanceSecondCardAfter = DashboardPage.getCurrentBalanceFirstCard();
         assertEquals(balanceAfterTransactionOnRecharged, balanceSecondCardAfter);

@@ -20,8 +20,19 @@ public class CardReplenishmentPage {
         form.shouldBe(visible);
     }
 
-    public void transferMany(DataHelper.CardInfo fromCardInfo) {
-        String amountToTransferForTest = "500";
+    String amountToTransfer = "500";
+    String newAmountToTransfer = "10500";
+
+    public void transferMany500(DataHelper.CardInfo fromCardInfo) {
+        String amountToTransferForTest = amountToTransfer;
+        amountField.setValue(amountToTransferForTest);
+        fromField.setValue(fromCardInfo.getCardNumber());
+
+        transferButton.click();
+    }
+
+    public void transferMany10500(DataHelper.CardInfo fromCardInfo) {
+        String amountToTransferForTest = newAmountToTransfer;
         amountField.setValue(amountToTransferForTest);
         fromField.setValue(fromCardInfo.getCardNumber());
 

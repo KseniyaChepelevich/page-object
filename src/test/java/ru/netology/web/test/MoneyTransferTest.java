@@ -87,10 +87,10 @@ public class MoneyTransferTest {
         cardReplenishmentPage.transferMany(cardInfo, 500);
         int balanceAfterTransactionOnRecharged = DataHelper.checkBalanceOfRechargeableCard(balanceFirstCardBefore, amountToTransfer);
         int balanceAfterTransaction = DataHelper.checkBalanceWhereTransfer(balanceSecondCardBefore, amountToTransfer);
-        int balanceFirstCardAfter = DashboardPage.getCurrentBalanceSecondCard();
-        int balanceSecondCardAfter = DashboardPage.getCurrentBalanceFirstCard();
-        assertEquals(balanceAfterTransactionOnRecharged, balanceSecondCardAfter);
-        assertEquals(balanceAfterTransaction, balanceFirstCardAfter);
+        int balanceFirstCardAfter = DashboardPage.getCurrentBalanceFirstCard();
+        int balanceSecondCardAfter = DashboardPage.getCurrentBalanceSecondCard();
+        assertEquals(balanceAfterTransactionOnRecharged, balanceFirstCardAfter);
+        assertEquals(balanceAfterTransaction, balanceSecondCardAfter);
     }
 
     @Test
@@ -108,10 +108,10 @@ public class MoneyTransferTest {
         cardReplenishmentPage.transferMany(cardInfo, 10500);
         int balanceAfterTransactionOnRecharged = DataHelper.checkBalanceOfRechargeableCard(balanceFirstCardBefore, newAmountToTransfer);
         int balanceAfterTransaction = DataHelper.checkBalanceWhereTransfer(balanceSecondCardBefore, newAmountToTransfer);
-        int balanceFirstCardAfter = DashboardPage.getCurrentBalanceSecondCard();
-        int balanceSecondCardAfter = DashboardPage.getCurrentBalanceFirstCard();
-        assertEquals(balanceAfterTransactionOnRecharged, balanceSecondCardAfter);
-        assertEquals(balanceAfterTransaction, balanceFirstCardAfter);
+        int balanceFirstCardAfter = DashboardPage.getCurrentBalanceFirstCard();
+        int balanceSecondCardAfter = DashboardPage.getCurrentBalanceSecondCard();
+        assertEquals(balanceAfterTransactionOnRecharged, balanceFirstCardAfter);
+        assertEquals(balanceAfterTransaction, balanceSecondCardAfter);
     }
 
 

@@ -23,14 +23,11 @@ public class MoneyTransferTest {
         var dashboardPage = verificationPage.validVerify(verificationCode);
         int a = DashboardPage.getCurrentBalanceFirstCard();
         int b = DashboardPage.getCurrentBalanceSecondCard();
-        //int c;
         if (a - b > 0) {
             int amountToTransf = (a - b)/2;
             var cardInfo = DataHelper.getFirstCardInfo();
             var cardReplenishmentPage = dashboardPage.chooseSecondCardToRecharge();
             cardReplenishmentPage.transferMany(cardInfo, amountToTransf);
-//            int balanceAfterTransactionOnRecharged = DataHelper.checkBalanceOfRechargeableCard(a, amountToTransf);
-//            int balanceAfterTransaction = DataHelper.checkBalanceWhereTransfer(b, amountToTransf);
             int balanceFirstCardAfter = DashboardPage.getCurrentBalanceFirstCard();
             int balanceSecondCardAfter = DashboardPage.getCurrentBalanceSecondCard();
 
@@ -40,8 +37,6 @@ public class MoneyTransferTest {
             var cardInfo = DataHelper.getSecondCardInfo();
             var cardReplenishmentPage = dashboardPage.chooseFirstCardToRecharge();
             cardReplenishmentPage.transferMany(cardInfo, amountToTransf);
-//            int balanceAfterTransactionOnRecharged = DataHelper.checkBalanceOfRechargeableCard(a, newAmountToTransfer);
-//            int balanceAfterTransaction = DataHelper.checkBalanceWhereTransfer(b, newAmountToTransfer);
             int balanceFirstCardAfter = DashboardPage.getCurrentBalanceFirstCard();
             int balanceSecondCardAfter = DashboardPage.getCurrentBalanceSecondCard();
         }

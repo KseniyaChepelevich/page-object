@@ -56,28 +56,4 @@ public class DataHelper {
         return finalBalance;
     }
 
-    public void equalizeTheBalance() {
-        open("http://localhost:9999");
-        var loginPage = new LoginPageV2();
-        var authInfo = DataHelper.getAuthInfo();
-        var verificationPage = loginPage.validLogin(authInfo);
-        var verificationCode = DataHelper.getVerificationCodeFor(authInfo);
-        var dashboardPage = verificationPage.validVerify(verificationCode);
-        int a = DashboardPage.getCurrentBalanceFirstCard();
-        int b = DashboardPage.getCurrentBalanceSecondCard();
-        int c;
-        if (a - b > 0) {
-            int amountToTransf = a - b;
-            var cardInfo = DataHelper.getFirstCardInfo();
-            var cardReplenishmentPage = dashboardPage.chooseFirstCardToRecharge();
-            cardReplenishmentPage.transferMany(cardInfo, amountToTransf);
-
-        }
-        if (b - a > 0) {
-            int amountToTransf = b - a;
-            var cardInfo = DataHelper.getSecondCardInfo();
-            var cardReplenishmentPage = dashboardPage.chooseSecondCardToRecharge();
-            cardReplenishmentPage.transferMany(cardInfo, amountToTransf);
-        }
-    }
 }

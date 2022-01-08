@@ -23,20 +23,15 @@ public class CardReplenishmentPage {
     String amountToTransfer = "500";
     String newAmountToTransfer = "10500";
 
-    public void transferMany500(DataHelper.CardInfo fromCardInfo) {
-        String amountToTransferForTest = amountToTransfer;
-        amountField.setValue(amountToTransferForTest);
+
+    public void transferMany(DataHelper.CardInfo fromCardInfo, int amountToTransf) {
+
+        String amount = Integer.toString(amountToTransf);
+        amountField.setValue(amount);
         fromField.setValue(fromCardInfo.getCardNumber());
 
         transferButton.click();
     }
 
-    public void transferMany10500(DataHelper.CardInfo fromCardInfo) {
-        String amountToTransferForTest = newAmountToTransfer;
-        amountField.setValue(amountToTransferForTest);
-        fromField.setValue(fromCardInfo.getCardNumber());
-
-        transferButton.click();
-    }
 
 }

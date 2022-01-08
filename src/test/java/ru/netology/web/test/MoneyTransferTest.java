@@ -1,5 +1,6 @@
 package ru.netology.web.test;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.netology.web.data.DataHelper;
 import ru.netology.web.page.CardReplenishmentPage;
@@ -11,6 +12,32 @@ import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MoneyTransferTest {
+
+    @BeforeEach
+    public void equalizeTheBalance() {
+        open("http://localhost:9999");
+        var loginPage = new LoginPageV2();
+        var authInfo = DataHelper.getAuthInfo();
+        var verificationPage = loginPage.validLogin(authInfo);
+        var verificationCode = DataHelper.getVerificationCodeFor(authInfo);
+        var dashboardPage = verificationPage.validVerify(verificationCode);
+        int a = DashboardPage.getCurrentBalanceFirstCard();
+        int b = DashboardPage.getCurrentBalanceSecondCard();
+        int c;
+        if (a - b > 0) {
+            int amountToTransf = a - b;
+            var cardInfo = DataHelper.getFirstCardInfo();
+            var cardReplenishmentPage = dashboardPage.chooseFirstCardToRecharge();
+            cardReplenishmentPage.transferMany(cardInfo, amountToTransf);
+
+        }
+        if (b - a > 0) {
+            int amountToTransf = b - a;
+            var cardInfo = DataHelper.getSecondCardInfo();
+            var cardReplenishmentPage = dashboardPage.chooseSecondCardToRecharge();
+            cardReplenishmentPage.transferMany(cardInfo, amountToTransf);
+        }
+    }
 
 
     int amountToTransfer = 500;
@@ -28,7 +55,7 @@ public class MoneyTransferTest {
         int balanceSecondCardBefore = DashboardPage.getCurrentBalanceSecondCard();
         var cardReplenishmentPage = dashboardPage.chooseSecondCardToRecharge();
         var cardInfo = DataHelper.getFirstCardInfo();
-        cardReplenishmentPage.transferMany500(cardInfo);
+        cardReplenishmentPage.transferMany(cardInfo, 500);
         int balanceAfterTransactionOnRecharged = DataHelper.checkBalanceOfRechargeableCard(balanceSecondCardBefore, amountToTransfer);
         int balanceAfterTransaction = DataHelper.checkBalanceWhereTransfer(balanceFirstCardBefore, amountToTransfer);
         int balanceFirstCardAfter = DashboardPage.getCurrentBalanceFirstCard();
@@ -49,7 +76,7 @@ public class MoneyTransferTest {
         int balanceSecondCardBefore = DashboardPage.getCurrentBalanceSecondCard();
         var cardReplenishmentPage = dashboardPage.chooseFirstCardToRecharge();
         var cardInfo = DataHelper.getSecondCardInfo();
-        cardReplenishmentPage.transferMany500(cardInfo);
+        cardReplenishmentPage.transferMany(cardInfo, 500);
         int balanceAfterTransactionOnRecharged = DataHelper.checkBalanceOfRechargeableCard(balanceFirstCardBefore, amountToTransfer);
         int balanceAfterTransaction = DataHelper.checkBalanceWhereTransfer(balanceSecondCardBefore, amountToTransfer);
         int balanceFirstCardAfter = DashboardPage.getCurrentBalanceSecondCard();
@@ -70,7 +97,7 @@ public class MoneyTransferTest {
         int balanceSecondCardBefore = DashboardPage.getCurrentBalanceSecondCard();
         var cardReplenishmentPage = dashboardPage.chooseFirstCardToRecharge();
         var cardInfo = DataHelper.getSecondCardInfo();
-        cardReplenishmentPage.transferMany10500(cardInfo);
+        cardReplenishmentPage.transferMany(cardInfo, 10500);
         int balanceAfterTransactionOnRecharged = DataHelper.checkBalanceOfRechargeableCard(balanceFirstCardBefore, newAmountToTransfer);
         int balanceAfterTransaction = DataHelper.checkBalanceWhereTransfer(balanceSecondCardBefore, newAmountToTransfer);
         int balanceFirstCardAfter = DashboardPage.getCurrentBalanceSecondCard();

@@ -21,15 +21,15 @@ public class MoneyTransferTest {
         var verificationPage = loginPage.validLogin(authInfo);
         var verificationCode = DataHelper.getVerificationCodeFor(authInfo);
         var dashboardPage = verificationPage.validVerify(verificationCode);
-        int a = DashboardPage.getCurrentBalanceFirstCard();
-        int b = DashboardPage.getCurrentBalanceSecondCard();
+        int a = DashboardPage.getFirstCardBalance();
+        int b = DashboardPage.getSecondCardBalance();
         if (a - b > 0) {
             int amountToTransf = (a - b)/2;
             var cardInfo = DataHelper.getFirstCardInfo();
             var cardReplenishmentPage = dashboardPage.chooseSecondCardToRecharge();
             cardReplenishmentPage.transferMany(cardInfo, amountToTransf);
-            int balanceFirstCardAfter = DashboardPage.getCurrentBalanceFirstCard();
-            int balanceSecondCardAfter = DashboardPage.getCurrentBalanceSecondCard();
+            int balanceFirstCardAfter = DashboardPage.getFirstCardBalance();
+            int balanceSecondCardAfter = DashboardPage.getSecondCardBalance();
 
         }
         if (b - a > 0) {
@@ -37,8 +37,8 @@ public class MoneyTransferTest {
             var cardInfo = DataHelper.getSecondCardInfo();
             var cardReplenishmentPage = dashboardPage.chooseFirstCardToRecharge();
             cardReplenishmentPage.transferMany(cardInfo, amountToTransf);
-            int balanceFirstCardAfter = DashboardPage.getCurrentBalanceFirstCard();
-            int balanceSecondCardAfter = DashboardPage.getCurrentBalanceSecondCard();
+            int balanceFirstCardAfter = DashboardPage.getFirstCardBalance();
+            int balanceSecondCardAfter = DashboardPage.getSecondCardBalance();
         }
     }
 
@@ -54,15 +54,15 @@ public class MoneyTransferTest {
         var verificationPage = loginPage.validLogin(authInfo);
         var verificationCode = DataHelper.getVerificationCodeFor(authInfo);
         var dashboardPage = verificationPage.validVerify(verificationCode);
-        int balanceFirstCardBefore = DashboardPage.getCurrentBalanceFirstCard();
-        int balanceSecondCardBefore = DashboardPage.getCurrentBalanceSecondCard();
+        int balanceFirstCardBefore = DashboardPage.getFirstCardBalance();
+        int balanceSecondCardBefore = DashboardPage.getSecondCardBalance();
         var cardReplenishmentPage = dashboardPage.chooseSecondCardToRecharge();
         var cardInfo = DataHelper.getFirstCardInfo();
         cardReplenishmentPage.transferMany(cardInfo, 500);
         int balanceAfterTransactionOnRecharged = DataHelper.checkBalanceOfRechargeableCard(balanceSecondCardBefore, amountToTransfer);
         int balanceAfterTransaction = DataHelper.checkBalanceWhereTransfer(balanceFirstCardBefore, amountToTransfer);
-        int balanceFirstCardAfter = DashboardPage.getCurrentBalanceFirstCard();
-        int balanceSecondCardAfter = DashboardPage.getCurrentBalanceSecondCard();
+        int balanceFirstCardAfter = DashboardPage.getFirstCardBalance();
+        int balanceSecondCardAfter = DashboardPage.getSecondCardBalance();
         assertEquals(balanceAfterTransactionOnRecharged, balanceSecondCardAfter);
         assertEquals(balanceAfterTransaction, balanceFirstCardAfter);
     }
@@ -75,15 +75,15 @@ public class MoneyTransferTest {
         var verificationPage = loginPage.validLogin(authInfo);
         var verificationCode = DataHelper.getVerificationCodeFor(authInfo);
         var dashboardPage = verificationPage.validVerify(verificationCode);
-        int balanceFirstCardBefore = DashboardPage.getCurrentBalanceFirstCard();
-        int balanceSecondCardBefore = DashboardPage.getCurrentBalanceSecondCard();
+        int balanceFirstCardBefore = DashboardPage.getFirstCardBalance();
+        int balanceSecondCardBefore = DashboardPage.getSecondCardBalance();
         var cardReplenishmentPage = dashboardPage.chooseFirstCardToRecharge();
         var cardInfo = DataHelper.getSecondCardInfo();
         cardReplenishmentPage.transferMany(cardInfo, 500);
         int balanceAfterTransactionOnRecharged = DataHelper.checkBalanceOfRechargeableCard(balanceFirstCardBefore, amountToTransfer);
         int balanceAfterTransaction = DataHelper.checkBalanceWhereTransfer(balanceSecondCardBefore, amountToTransfer);
-        int balanceFirstCardAfter = DashboardPage.getCurrentBalanceFirstCard();
-        int balanceSecondCardAfter = DashboardPage.getCurrentBalanceSecondCard();
+        int balanceFirstCardAfter = DashboardPage.getFirstCardBalance();
+        int balanceSecondCardAfter = DashboardPage.getSecondCardBalance();
         assertEquals(balanceAfterTransactionOnRecharged, balanceFirstCardAfter);
         assertEquals(balanceAfterTransaction, balanceSecondCardAfter);
     }
@@ -96,15 +96,15 @@ public class MoneyTransferTest {
         var verificationPage = loginPage.validLogin(authInfo);
         var verificationCode = DataHelper.getVerificationCodeFor(authInfo);
         var dashboardPage = verificationPage.validVerify(verificationCode);
-        int balanceFirstCardBefore = DashboardPage.getCurrentBalanceFirstCard();
-        int balanceSecondCardBefore = DashboardPage.getCurrentBalanceSecondCard();
+        int balanceFirstCardBefore = DashboardPage.getFirstCardBalance();
+        int balanceSecondCardBefore = DashboardPage.getSecondCardBalance();
         var cardReplenishmentPage = dashboardPage.chooseFirstCardToRecharge();
         var cardInfo = DataHelper.getSecondCardInfo();
         cardReplenishmentPage.transferMany(cardInfo, 10500);
         int balanceAfterTransactionOnRecharged = DataHelper.checkBalanceOfRechargeableCard(balanceFirstCardBefore, newAmountToTransfer);
         int balanceAfterTransaction = DataHelper.checkBalanceWhereTransfer(balanceSecondCardBefore, newAmountToTransfer);
-        int balanceFirstCardAfter = DashboardPage.getCurrentBalanceFirstCard();
-        int balanceSecondCardAfter = DashboardPage.getCurrentBalanceSecondCard();
+        int balanceFirstCardAfter = DashboardPage.getFirstCardBalance();
+        int balanceSecondCardAfter = DashboardPage.getSecondCardBalance();
         assertEquals(balanceAfterTransactionOnRecharged, balanceFirstCardAfter);
         assertEquals(balanceAfterTransaction, balanceSecondCardAfter);
     }

@@ -10,18 +10,18 @@ public class CardReplenishmentPage {
 
     private SelenideElement form = $(".form");
 
-    private static SelenideElement amountField = $("[data-test-id='amount'] input");
-    private static SelenideElement fromField = $("[data-test-id='from'] input");
+    private SelenideElement amountField = $("[data-test-id='amount'] input");
+    private SelenideElement fromField = $("[data-test-id='from'] input");
 
-    private static SelenideElement transferButton = $("[data-test-id='action-transfer']");
+    private SelenideElement transferButton = $("[data-test-id='action-transfer']");
 
 
     public CardReplenishmentPage() {
         form.shouldBe(visible);
     }
 
-    String amountToTransfer = "500";
-    String newAmountToTransfer = "10500";
+//    String amountToTransfer = "500";
+//    String newAmountToTransfer = "10500";
 
 
     public void transferMany(DataHelper.CardInfo fromCardInfo, int amountToTransf) {

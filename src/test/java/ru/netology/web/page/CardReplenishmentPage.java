@@ -20,8 +20,7 @@ public class CardReplenishmentPage {
         form.shouldBe(visible);
     }
 
-//    String amountToTransfer = "500";
-//    String newAmountToTransfer = "10500";
+
 
 
     public void transferMany(DataHelper.CardInfo fromCardInfo, int amountToTransf) {

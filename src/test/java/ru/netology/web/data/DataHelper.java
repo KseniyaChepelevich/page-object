@@ -1,11 +1,7 @@
 package ru.netology.web.data;
 
 import lombok.Value;
-import ru.netology.web.page.CardReplenishmentPage;
-import ru.netology.web.page.DashboardPage;
-import ru.netology.web.page.LoginPageV2;
 
-import static com.codeborne.selenide.Selenide.open;
 
 public class DataHelper {
     private DataHelper() {
@@ -35,7 +31,7 @@ public class DataHelper {
     @Value
     public static class CardInfo {
         private String cardNumber;
-        //private int cardBalance;
+
     }
 
     public static CardInfo getFirstCardInfo() {
